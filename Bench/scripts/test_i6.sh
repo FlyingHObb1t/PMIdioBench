@@ -20,12 +20,6 @@ sleep 2
 NJOBS=16 WORKLOADS="SeqR RandR" scripts/get_fio_results.sh i6-pmem-bw
 sleep 2
 
-echo "Flash Seq and Rand Read b/w"
-PMEM_DIR=$FLASH_DIR ENGINE="Sync" NJOBS=16 WORKLOADS="SeqR RandR" BSIZE="4096 8192 16384 32768 65536 131072 262144" scripts/run_fio.sh i6-flash-bw
-sleep 2
-ENGINE="Sync" NJOBS=16 WORKLOADS="SeqR RandR" BSIZE="4096 8192 16384 32768 65536 131072 262144" scripts/get_fio_results.sh i6-flash-bw
-sleep 2
-
 echo "PMEM Seq Read counters"
 TOOL="ipmw" NJOBS=16 BSIZE=256 PMEM_DIR=$PMEM_DIR1 WORKLOADS="SeqR" scripts/run_fio.sh i6-pmem-counters
 sleep 2

@@ -201,6 +201,11 @@ static int detect_cpu(void)
         printf("Found Skylake / Cascadelake Server CPU\n");
         is_core2 = 0;
         break;
+// Added by Tianxi Li for tentative use (model 106)
+    case 106: /* Skylake / Cascade Lake Server */
+        printf("Found Skylake / Cascadelake Server CPU\n");
+        is_core2 = 0;
+        break;
 
     case 142:
     case 158: /* Kabylake */
@@ -486,10 +491,10 @@ int main(int argc, char **argv)
     }
 
     core2 = detect_cpu();
-    if (core2 < 0) {
-        printf("Unsupported CPU type\n");
-        return -1;
-    }
+   // if (core2 < 0) {
+   //     printf("Unsupported CPU type\n");
+   //     return -1;
+   // }
 
     if (disable) {
         if (core2) {

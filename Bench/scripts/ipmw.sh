@@ -6,7 +6,7 @@ COUNTERS=("bytes_read" "bytes_written" "read_hit_ratio" "write_hit_ratio" \
           "ddrt_write_ops")
 
 # Configuration Parameters
-: ${IPMW_HOME:=/opt/intel/ipmwatch} # ipmwatch install dir
+: ${IPMW_HOME:=/opt/intel/oneapi/vtune/2022.2.0/bin64/ipmwatch} # ipmwatch install dir
 : ${NUMA_NODE:=0} # NUMA node to get metrics for
 : ${MAX_BW:=8192} # Max PMEM B/W in MB/s
 
@@ -51,7 +51,7 @@ function get_pmem_stats()
 	# Get total bytes_read
 	total_bytes_read=$(get_total_val 0 $FILE)
 	if [ $total_bytes_read -ge $total_bytes_written ]; then
-		total_bytes_read=$(( $total_bytes_read - $total_bytes_written ))
+		total_bytes_read=$(( total_bytes_read - total_bytes_written ))
 	fi
 	total_bytes_read_hr=$(numfmt --to=iec-i --suffix=B $total_bytes_read)
 	echo -e "total_bytes_read\t$total_bytes_read\t$total_bytes_read_hr"
@@ -64,7 +64,7 @@ function get_pmem_stats()
 	# Get total media_read_ops
 	media_read_ops=$(get_total_val 5 $FILE)
 	if [ $media_read_ops -ge $media_write_ops ]; then
-		media_read_ops=$(( $media_read_ops - $media_write_ops ))
+		media_read_ops=$(( media_read_ops - media_write_ops ))
 	fi
 	media_read_ops_hr=$(numfmt --to=si $media_read_ops)
 	echo -e "total_media_read_ops\t$media_read_ops\t$media_read_ops_hr"
@@ -77,7 +77,7 @@ function get_pmem_stats()
 	# Get total ddrt_read_ops
 	ddrt_read_ops=$(get_total_val 9 $FILE)
 	if [ $ddrt_read_ops -ge $ddrt_write_ops ]; then
-		ddrt_read_ops=$(( $ddrt_read_ops - $ddrt_write_ops ))
+		ddrt_read_ops=$(( ddrt_read_ops - ddrt_write_ops ))
 	fi
 	ddrt_read_ops_hr=$(numfmt --to=si $ddrt_read_ops)
 	echo -e "total_ddrt_read_ops\t$ddrt_read_ops\t$ddrt_read_ops_hr"
@@ -127,7 +127,7 @@ function main()
 	fi
 
 	# Start ipmwatch tool in the background
-	$IPMW_HOME/bin64/ipmwatch 1 -td -f ipmw 2>/dev/null &
+	$IPMW_HOME/ipmwatch 1 -td -f ipmw.tsv 2>/dev/null &
 	PID=$!
 
 	# Run app

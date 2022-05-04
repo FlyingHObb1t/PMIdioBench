@@ -34,9 +34,3 @@ PMEM_DIR=$PMEM_DIR1 NJOBS="8" WORKLOADS="SeqW" PMEM_NO_MOVNT=1 scripts/run_fio.s
 sleep 2
 NJOBS="8" WORKLOADS="SeqW" scripts/get_fio_results.sh i2-pmem-s
 sleep 2
-
-echo "Flash read and write b/w"
-PMEM_DIR=$FLASH_DIR ENGINE="Sync" NJOBS="28" WORKLOADS="SeqR SeqW" BSIZE="4096 8192 16384 32768 65536 131072 262144" scripts/run_fio.sh i2-flash
-sleep 2
-ENGINE="Sync" NJOBS="28" WORKLOADS="SeqR SeqW" BSIZE="4096 8192 16384 32768 65536 131072 262144" scripts/get_fio_results.sh i2-flash
-sleep 2
