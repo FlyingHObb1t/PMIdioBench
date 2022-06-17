@@ -83,7 +83,7 @@ for njobs in ${NJOBS[*]}; do
 			sed -i -- "s+PMEM_DIR+$PMEM_DIR+g" workloads/fio/"$ENGINE""$workload".fio
 
 			# Run test
-			$FIO_HOME/fio --output=results/"$ENGINE""$workload"-"$njobs"-"$bsize"-"$case".log workloads/fio/"$ENGINE""$workload".fio
+			numactl -N $NUMA_NODE $FIO_HOME/fio --output=results/"$ENGINE""$workload"-"$njobs"-"$bsize"-"$case".log workloads/fio/"$ENGINE""$workload".fio
 			sleep 5
 		done
 	done

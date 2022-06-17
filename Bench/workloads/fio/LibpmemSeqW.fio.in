@@ -27,7 +27,7 @@ time_based
 runtime=15
 ramp_time=5
 
-cpus_allowed=NUMA
+#cpus_allowed=NUMA
 
 [SeqWrite]
 bs=BSIZE
