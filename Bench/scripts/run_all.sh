@@ -4,6 +4,8 @@ source scripts/config.sh
 
 PMEM_PATH=$PMEM_DIR1
 
+#export PMEM_NO_CLWB=1
+
 # Disable hw prefetching
 disable_prefetch/intel-prefetch-disable > /dev/null 2>&1
 sleep 2
@@ -32,7 +34,7 @@ sleep 2
 scripts/test_i3.sh
 sleep 2
 
-# Run test_i4
+## Run test_i4
 scripts/test_i4.sh
 sleep 2
 

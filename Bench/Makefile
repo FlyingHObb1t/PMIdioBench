@@ -11,7 +11,7 @@ PROGRAMS = $(SOURCES:%.c=%.x)
 
 CACHE_LINESIZE = $(shell getconf LEVEL1_DCACHE_LINESIZE)
 CC := $(shell which gcc)
-CFLAGS = -Wall -Wl,--no-as-needed -g -fopenmp -DCACHE_LINESIZE=$(CACHE_LINESIZE)
+CFLAGS = -Wall -Wl,--no-as-needed -g -fopenmp -DCACHE_LINESIZE=$(CACHE_LINESIZE) -O0
 INCLUDES = -I./include
 LIBS = pmem
 DEPFLAGS = -MMD -MP -MF $*.d.tmp
@@ -22,6 +22,7 @@ all : $(PROGRAMS)
 %.x : %.o
 	$(Q)echo "  LINK $@"; \
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
+	rm $*.o $*.d
 
 %.o : %.c $(HEADERS)
 	$(Q)echo "  CC   $@"; \

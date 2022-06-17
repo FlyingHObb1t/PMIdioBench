@@ -8,8 +8,8 @@ group_reporting
 norandommap
 overwrite=1
 thinktime=0
-sync=0
-direct=0
+sync=SYNC
+direct=DIRECT
 
 ioengine=libpmem
 iodepth=1
@@ -27,10 +27,13 @@ time_based
 runtime=15
 ramp_time=5
 
+cpus_allowed=NUMA
+
 [RandWrite]
 bs=BSIZE
 numjobs=NJOBS  # depending on CPU core count more can be better, but also can be a bottleneck
 
-rw=randrw
-rwmixread=0
-percentage_random=50
+rw=randwrite
+#
+#rwmixread=0
+#percentage_random=100

@@ -9,7 +9,6 @@ COUNTERS=("bytes_read" "bytes_written" "read_hit_ratio" "write_hit_ratio" \
 : ${IPMW_HOME:=/opt/intel/oneapi/vtune/2022.2.0/bin64/ipmwatch} # ipmwatch install dir
 : ${NUMA_NODE:=0} # NUMA node to get metrics for
 : ${MAX_BW:=8192} # Max PMEM B/W in MB/s
-
 function get_total_val()
 {
 	local NUM=$(( $1 + 3 ))
@@ -32,7 +31,7 @@ function get_total_val()
 	done
 
 	echo "$TOTAL_VAL"
-	rm -f _tmp
+	# rm -f _tmp
 }
 
 function get_pmem_stats()
@@ -116,7 +115,7 @@ function get_pmem_stats()
     ) > _temp
 
 	column -t _temp
-	rm -f _temp
+#	rm -f _temp
 }
 
 function main()
@@ -127,7 +126,7 @@ function main()
 	fi
 
 	# Start ipmwatch tool in the background
-	$IPMW_HOME/ipmwatch 1 -td -f ipmw.tsv 2>/dev/null &
+	$IPMW_HOME/ipmwatch 1 -td -f ipmw 2>/dev/null &
 	PID=$!
 
 	# Run app

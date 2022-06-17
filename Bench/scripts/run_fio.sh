@@ -50,6 +50,22 @@ case=$1
 # Uncomment to disable cache flush
 #export PMEM_NO_FLUSH=1
 
+#if [ ! -z "${PMEM_MOVNT_THRESHOLD}" ] && [ $PMEM_MOVNT_THRESHOLD -eq 0 ]; then
+#	DIRECT=1
+#else
+#	#DIRECT=0
+#fi
+
+: ${DIRECT:=0}
+: ${SYNC:=1}
+
+if [ ! -z "$NUMA_NODE" ] && [ $NUMA_NODE -eq 1 ]; then
+	NUMA="28-55"
+else
+	NUMA="0-27"
+fi
+
+
 mkdir -p results
 
 for njobs in ${NJOBS[*]}; do
@@ -61,11 +77,13 @@ for njobs in ${NJOBS[*]}; do
 			# Update configuration
 			sed -i -- "s/NJOBS/$njobs/g" workloads/fio/"$ENGINE""$workload".fio
 			sed -i -- "s/BSIZE/$bsize/g" workloads/fio/"$ENGINE""$workload".fio
+			sed -i -- "s/SYNC/$SYNC/g" workloads/fio/"$ENGINE""$workload".fio
+			sed -i -- "s/DIRECT/$DIRECT/g" workloads/fio/"$ENGINE""$workload".fio
+			sed -i -- "s/NUMA/$NUMA/g" workloads/fio/"$ENGINE""$workload".fio
 			sed -i -- "s+PMEM_DIR+$PMEM_DIR+g" workloads/fio/"$ENGINE""$workload".fio
 
 			# Run test
-			$(tool_cmdline $TOOL) \
-			numactl -N $NUMA_NODE $FIO_HOME/fio --output=results/"$ENGINE""$workload"-"$njobs"-"$bsize"-"$case".log workloads/fio/"$ENGINE""$workload".fio
+			$FIO_HOME/fio --output=results/"$ENGINE""$workload"-"$njobs"-"$bsize"-"$case".log workloads/fio/"$ENGINE""$workload".fio
 			sleep 5
 		done
 	done
