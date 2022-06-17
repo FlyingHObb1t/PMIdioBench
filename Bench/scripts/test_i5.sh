@@ -7,7 +7,7 @@ source scripts/config.sh
 echo ""
 echo "$0 $@"
 
-rm -rf /dev/shm/*
+#rm -rf /dev/shm/*
 echo "DRAM store b/w"
 PMEM_DIR="/dev/shm" WORKLOADS="SeqW RandW" PMEM_IS_PMEM_FORCE=1 PMEM_NO_MOVNT=1 PMEM_NO_FLUSH=1 scripts/run_fio.sh i5-dram-store
 sleep 2

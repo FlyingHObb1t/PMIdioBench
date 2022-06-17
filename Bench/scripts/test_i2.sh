@@ -7,7 +7,7 @@ source scripts/config.sh
 echo ""
 echo "$0 $@"
 
-rm -rf /dev/shm/*
+#rm -rf /dev/shm/*
 echo "DRAM load and nt-store b/w"
 PMEM_DIR="/dev/shm" NJOBS="28" WORKLOADS="SeqR SeqW" PMEM_IS_PMEM_FORCE=1 PMEM_MOVNT_THRESHOLD=0 scripts/run_fio.sh i2-dram-nt
 sleep 2

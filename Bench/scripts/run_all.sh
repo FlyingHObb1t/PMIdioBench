@@ -44,6 +44,8 @@ sleep 2
 scripts/test_i6.sh
 sleep 2
 
+exit
+
 # Run test_i7
 rm -f $PMEM_PATH/test /dev/shm/test
 sleep 2
